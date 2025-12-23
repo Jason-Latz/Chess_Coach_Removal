@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Chess.com Coach Remover",
+  "version": "1.0.0",
+  "description": "Popup Button Removes Coach Messages on Puzzles page of Chess.com",
+  "action": {
+    "default_title": "Chess.com Coach Remover",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"]
+}
