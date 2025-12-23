@@ -27,10 +27,10 @@ function blurElementBySelector(selector, BLUR_PX) {
 
     const elmt = document.querySelector(selector);
 
-    if (!el) return;
+    if (!elmt) return;
 
-    el.style.filter = `blur(${BLUR_PX}px)`;
-    el.style.webkitFilter = `blur(${BLUR_PX}px)`;
+    elmt.style.filter = `blur(${BLUR_PX}px)`;
+    elmt.style.webkitFilter = `blur(${BLUR_PX}px)`;
 
-    el.style.display = el.style.display || "block";
+    elmt.style.display = el.style.display || "block";
 }
