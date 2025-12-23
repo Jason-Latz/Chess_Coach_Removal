@@ -29,8 +29,8 @@ function blurElementBySelector(selector, BLUR_PX) {
 
     if (!el) return;
 
-    el.style.filter = `blur(${blurPx}px)`;
-    el.style.webkitFilter = `blur(${blurPx}px)`;
+    el.style.filter = `blur(${BLUR_PX}px)`;
+    el.style.webkitFilter = `blur(${BLUR_PX}px)`;
 
     el.style.display = el.style.display || "block";
 }
