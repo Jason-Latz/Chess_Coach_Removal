@@ -1,36 +1,24 @@
+const STORAGE_KEY = "blurCoach"; // shared key used by content script to know whether to blur
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("toggle");
+    if (!toggleBtn) return; // nothing to wire up if the button is missing
 
-
-const TARGET_SELECTOR = '[data-cy="secondary-coach-speech"]';
-const BLUR_PX = 8;
-
-document.getElementById("run").addEventListener("click", async() => {
-    
-    const tabs = await chrome.tabs.query({ active: true, currentWindow: true});
-    const tab = tabs[0];
-
-    if (!tab || !tab.id) return;
-
-
-    await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: blurElementBySelector,
-        args: [TARGET_SELECTOR, BLUR_PX],
-
+    // Initialize button label from saved state (defaults to true = blurred)
+    chrome.storage.local.get({ [STORAGE_KEY]: true }, ({ [STORAGE_KEY]: blurCoach }) => {
+        updateButtonLabel(toggleBtn, blurCoach);
     });
 
-    window.close(); 
-
+    // Flip the stored state on click; content.js listens to this and applies blur immediately
+    toggleBtn.addEventListener("click", () => {
+        chrome.storage.local.get({ [STORAGE_KEY]: true }, ({ [STORAGE_KEY]: blurCoach }) => {
+            const next = !blurCoach;
+            chrome.storage.local.set({ [STORAGE_KEY]: next }, () => updateButtonLabel(toggleBtn, next));
+        });
+    });
 });
 
-function blurElementBySelector(selector, BLUR_PX) {
-
-    const elmt = document.querySelector(selector);
-
-    if (!elmt) return;
-
-    elmt.style.filter = `blur(${BLUR_PX}px)`;
-    elmt.style.webkitFilter = `blur(${BLUR_PX}px)`;
-
-    elmt.style.display = el.style.display || "block";
+function updateButtonLabel(btn, isBlurredOn) {
+    // Keep the label in sync with the current blur state
+    btn.textContent = isBlurredOn ? "Show advice" : "Hide advice";
 }
