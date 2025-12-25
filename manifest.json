@@ -8,5 +8,10 @@
     "default_popup": "popup.html"
   },
   "permissions": ["scripting", "activeTab"],
-  "host_permissions": ["<all_urls>"]
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [{
+  "matches": ["https://www.chess.com/*"],
+  "js": ["content.js"],
+  "run_at": "document_idle"
+}]
 }
